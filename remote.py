@@ -37,11 +37,29 @@ def volume_mute():
         media.mute(False)
 
 
+def volume_info():
+    volume = media.get_volume()
+    print('\nCurrent volume level is ' + volume['volume'])
+
+
+def up_volume_lvl():
+    media.volume_up()
+    print('\nVolume increased by 1')
+
+
+def down_volume_lvl():
+    media.volume_down()
+    print('\nVolume decreased by 1')
+
+
 run_again = True
+
+# Call this function after user makes a decision.
+# This lets them run the program again if they want.
 
 
 def rerun():
-    print('Wouold you like to run the program again? [Y/N]')
+    print('\nWould you like to run the program again? [Y/N]')
     run_again_choice = input('> ')
 
     if run_again_choice == 'y':
@@ -56,8 +74,9 @@ def rerun():
 
 while run_again != False:
     # Ask the user what they would like to do after connecting
-    print(
-        '\nWhat would you like to adjust? Choose only the number.\n [1]Set the volume level\n [2]Mute or unmute the volume\n [3]Turn off\n')
+    print('What would you like to adjust? Choose only the number.\n')
+    print('[1]Set the volume level\n[2]Mute or unmute the volume\n[3]Turn off\n')
+    print('[4]Current volume level\n[5]Volume up 1\n[6]Volume down 1\n')
     choice = int(input('> '))
 
     if choice == 1:
@@ -68,4 +87,13 @@ while run_again != False:
         rerun()
     elif choice == 3:
         system.power_off()
+        # After TV has turned off you can't reconnect. You need to create a Wake on LAN function, to connect again.
+    elif choice == 4:
+        volume_info()
+        rerun()
+    elif choice == 5:
+        up_volume_lvl()
+        rerun()
+    elif choice == 6:
+        down_volume_lvl()
         rerun()
