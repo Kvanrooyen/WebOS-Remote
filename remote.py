@@ -1,8 +1,7 @@
-import sys
 from wakeonlan import send_magic_packet
 from pywebostv.discovery import discover
 from pywebostv.connection import WebOSClient
-from pywebostv.controls import MediaControl, SystemControl
+from pywebostv.controls import MediaControl, SystemControl, InputControl, SourceControl
 
 # Send a wake on lan broadcast to your TV.
 # This will ensure the TV is on, before trying to connect.
@@ -24,6 +23,8 @@ for status in client.register(store):
 
 media = MediaControl(client)
 system = SystemControl(client)
+inp = InputControl(client)
+src_control = SourceControl(client)
 
 
 def volume_set():
@@ -69,50 +70,49 @@ def sys_info():
     print('Language: ' + system_info['language_code'])
 
 
+def kb_input():
+    print('\nType your text below:')
+    user_input = input('> ')
+    inp.type(user_input)
+
+
+def tv_source():
+    sources = src_control.list_sources()
+    print(sources)
+
+
 run_again = True
 
 # Call this function after user makes a decision.
 # This lets them run the program again if they want.
 
 
-def rerun():
-    print('\nWould you like to run the program again? [Y/N]')
-    run_again_choice = input('> ')
-
-    if run_again_choice == 'y':
-        run_again = True
-    elif run_again_choice == 'Y':
-        run_again = True
-    elif run_again_choice == 'n':
-        sys.exit()
-    elif run_again_choice == 'N':
-        sys.exit()
-
-
 while run_again != False:
     # Ask the user what they would like to do after connecting
     print('\n\nWhat would you like to do? Choose only the number.\n')
+    print('[0]Exit the program')
     print('[1]Set the volume level\n[2]Mute or unmute the volume\n[3]Turn off')
     print('[4]Current volume level\n[5]Volume up 1\n[6]Volume down 1')
-    print('[7]System info\n[8]\n[9]')
+    print('[7]System info\n[8]Keyboard Input (On-screen keyboard needs to be displayed)\n[9]List Sources')
     choice = int(input('> '))
 
-    if choice == 1:
+    if choice == 0:
+        run_again = False
+    elif choice == 1:
         volume_set()
-        rerun()
     elif choice == 2:
         volume_mute()
-        rerun()
     elif choice == 3:
         system.power_off()
     elif choice == 4:
         volume_info()
-        rerun()
     elif choice == 5:
         up_volume_lvl()
-        rerun()
     elif choice == 6:
         down_volume_lvl()
-        rerun()
     elif choice == 7:
         sys_info()
+    elif choice == 8:
+        kb_input()
+    elif choice == 9:
+        tv_source()
