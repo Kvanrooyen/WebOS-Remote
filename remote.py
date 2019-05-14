@@ -1,7 +1,12 @@
 import sys
+from wakeonlan import send_magic_packet
 from pywebostv.discovery import discover
 from pywebostv.connection import WebOSClient
 from pywebostv.controls import MediaControl, SystemControl
+
+# Send a wake on lan broadcast to your TV.
+# This will ensure the TV is on, before trying to connect.
+send_magic_packet('<TV MAC ADDRESSES>')
 
 # The 'store' gets populated during the registration process. If it is empty, a registration prompt
 # will show up on the TV. You can pass any dictionary-like interface instead.
@@ -39,7 +44,7 @@ def volume_mute():
 
 def volume_info():
     volume = media.get_volume()
-    print('\nCurrent volume level is ' + volume['volume'])
+    print('\nCurrent volume level is ', volume['volume'])
 
 
 def up_volume_lvl():
@@ -50,6 +55,18 @@ def up_volume_lvl():
 def down_volume_lvl():
     media.volume_down()
     print('\nVolume decreased by 1')
+
+
+def sys_info():
+    # Return Sysetem info in a dictionary
+    system_info = system.info()
+    print('Product Name: ' + system_info['product_name'])
+    print('Model Name: ' + system_info['model_name'])
+    print('Software Version: ',
+          system_info['major_ver'] + '.' + system_info['minor_ver'])
+    print('MAC Address: ' + system_info['device_id'])
+    print('Country: ' + system_info['country'])
+    print('Language: ' + system_info['language_code'])
 
 
 run_again = True
@@ -74,9 +91,10 @@ def rerun():
 
 while run_again != False:
     # Ask the user what they would like to do after connecting
-    print('What would you like to adjust? Choose only the number.\n')
-    print('[1]Set the volume level\n[2]Mute or unmute the volume\n[3]Turn off\n')
-    print('[4]Current volume level\n[5]Volume up 1\n[6]Volume down 1\n')
+    print('\n\nWhat would you like to do? Choose only the number.\n')
+    print('[1]Set the volume level\n[2]Mute or unmute the volume\n[3]Turn off')
+    print('[4]Current volume level\n[5]Volume up 1\n[6]Volume down 1')
+    print('[7]System info\n[8]\n[9]')
     choice = int(input('> '))
 
     if choice == 1:
@@ -87,7 +105,6 @@ while run_again != False:
         rerun()
     elif choice == 3:
         system.power_off()
-        # After TV has turned off you can't reconnect. You need to create a Wake on LAN function, to connect again.
     elif choice == 4:
         volume_info()
         rerun()
@@ -97,3 +114,5 @@ while run_again != False:
     elif choice == 6:
         down_volume_lvl()
         rerun()
+    elif choice == 7:
+        sys_info()
