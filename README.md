@@ -14,10 +14,3 @@ Once you have completed the above 2 steps you can run the program. After your fi
 ## Credit
 
 This project would not be possible without the use of [supersaiyanmode project](https://github.com/supersaiyanmode/PyWebOSTV). I used his code from the README to connect, and then used some of the control api's.
-
-## Future Plans
-
-- Add more media controls
-- Add more system controls
-- Keyboard control
-- Source control
