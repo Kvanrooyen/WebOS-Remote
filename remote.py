@@ -46,6 +46,7 @@ def volume_mute():
 def volume_info():
     volume = media.get_volume()
     print('\nCurrent volume level is ', volume['volume'])
+    print('Mute: ', volume['muted'])
 
 
 def up_volume_lvl():
@@ -76,11 +77,6 @@ def kb_input():
     inp.type(user_input)
 
 
-def tv_source():
-    sources = src_control.list_sources()
-    print(sources)
-
-
 run_again = True
 
 # Call this function after user makes a decision.
@@ -93,7 +89,7 @@ while run_again != False:
     print('[0]Exit the program')
     print('[1]Set the volume level\n[2]Mute or unmute the volume\n[3]Turn off')
     print('[4]Current volume level\n[5]Volume up 1\n[6]Volume down 1')
-    print('[7]System info\n[8]Keyboard Input (On-screen keyboard needs to be displayed)\n[9]List Sources')
+    print('[7]System info\n[8]Keyboard Input (On-screen keyboard needs to be displayed)\n')
     choice = int(input('> '))
 
     if choice == 0:
@@ -114,5 +110,3 @@ while run_again != False:
         sys_info()
     elif choice == 8:
         kb_input()
-    elif choice == 9:
-        tv_source()
