@@ -2,7 +2,7 @@ import sys
 from wakeonlan import send_magic_packet
 from pywebostv.discovery import discover
 from pywebostv.connection import WebOSClient
-from pywebostv.controls import MediaControl, SystemControl, InputControl, SourceControl
+from pywebostv.controls import MediaControl, SystemControl, InputControl
 
 # Send a wake on lan broadcast to your TV.
 # This will ensure the TV is on, before trying to connect.
@@ -25,13 +25,18 @@ for status in client.register(store):
 media = MediaControl(client)
 system = SystemControl(client)
 inp = InputControl(client)
-src_control = SourceControl(client)
 
 
 def volume_set():
     print('\nWhat volume level do you want? [0-100]')
-    volume_level = int(input('> '))
-    media.set_volume(volume_level)
+    try:
+        volume_level = int(input('> '))
+        if -1 < volume_level < 101:  # Check if range of 1-100
+            media.set_volume(volume_level)
+        else:
+            print('Not a valid range, please use a range of 1-100.')
+    except ValueError:
+        print('That\'s not a valid number.')
 
 
 def volume_mute():
@@ -42,6 +47,8 @@ def volume_mute():
         media.mute(True)
     elif mute_val == 'unmute':
         media.mute(False)
+    else:
+        print('That is not a valid value. Please type "mute" or "unmute".')
 
 
 def volume_info():
@@ -79,15 +86,11 @@ def kb_input():
 
 
 def unknown_command():
-    print('that\'s not a valid command.')
-
-
-def end():
-    sys.exit()
+    print('That\'s not a valid command.')
 
 
 menu = {
-    "0": end,
+    "0": sys.exit(),
     "1": volume_set,
     "2": volume_mute,
     "3": system.power_off,
