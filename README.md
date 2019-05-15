@@ -1,5 +1,7 @@
 # WebOS-Remote
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![GitHub last commit](https://img.shields.io/github/last-commit/Kvanrooyen/WebOS-Remote.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2019.svg)
+
 A python application to control your LG WebOS TV with the PyWebOSTV api
 
 ## Getting started
