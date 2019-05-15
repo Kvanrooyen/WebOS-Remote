@@ -1,3 +1,4 @@
+import sys
 from wakeonlan import send_magic_packet
 from pywebostv.discovery import discover
 from pywebostv.connection import WebOSClient
@@ -62,7 +63,7 @@ def down_volume_lvl():
 def sys_info():
     # Return Sysetem info in a dictionary
     system_info = system.info()
-    print('Product Name: ' + system_info['product_name'])
+    print('\nProduct Name: ' + system_info['product_name'])
     print('Model Name: ' + system_info['model_name'])
     print('Software Version: ',
           system_info['major_ver'] + '.' + system_info['minor_ver'])
@@ -77,36 +78,33 @@ def kb_input():
     inp.type(user_input)
 
 
-run_again = True
-
-# Call this function after user makes a decision.
-# This lets them run the program again if they want.
+def unknown_command():
+    print('that\'s not a valid command.')
 
 
-while run_again != False:
+def end():
+    sys.exit()
+
+
+menu = {
+    "0": end,
+    "1": volume_set,
+    "2": volume_mute,
+    "3": system.power_off,
+    "4": volume_info,
+    "5": up_volume_lvl,
+    "6": down_volume_lvl,
+    "7": sys_info,
+    "8": kb_input
+}
+
+
+while True:
     # Ask the user what they would like to do after connecting
     print('\n\nWhat would you like to do? Choose only the number.\n')
     print('[0]Exit the program')
     print('[1]Set the volume level\n[2]Mute or unmute the volume\n[3]Turn off')
     print('[4]Current volume level\n[5]Volume up 1\n[6]Volume down 1')
-    print('[7]System info\n[8]Keyboard Input (On-screen keyboard needs to be displayed)\n')
-    choice = int(input('> '))
-
-    if choice == 0:
-        run_again = False
-    elif choice == 1:
-        volume_set()
-    elif choice == 2:
-        volume_mute()
-    elif choice == 3:
-        system.power_off()
-    elif choice == 4:
-        volume_info()
-    elif choice == 5:
-        up_volume_lvl()
-    elif choice == 6:
-        down_volume_lvl()
-    elif choice == 7:
-        sys_info()
-    elif choice == 8:
-        kb_input()
+    print('[7]System info\n[8]Keyboard Input (On-screen keyboard needs to be displayed)')
+    choice = input('> ')
+    menu.get(choice, unknown_command)()
