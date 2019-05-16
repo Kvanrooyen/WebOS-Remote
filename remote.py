@@ -28,27 +28,38 @@ inp = InputControl(client)
 
 
 def volume_set():
-    print('\nWhat volume level do you want? [0-100]')
-    try:
-        volume_level = int(input('> '))
-        if -1 < volume_level < 101:  # Check if range of 1-100
-            media.set_volume(volume_level)
+    while True:
+        print('\nWhat volume level do you want? [0-100]')
+        try:  # Ask the user what level they want the volume
+            volume_level = int(input('> '))
+            if -1 < volume_level < 101:  # Check that input is in valid range of 1-100
+                # Set the volume based on the user's input number
+                media.set_volume(volume_level)
+            else:
+                print('Not a valid range, please use a range of 1-100.')
+        except ValueError:
+            print('That\'s not a valid number. Try again')
+            continue  # Ask the user again, after telling them they entered a invalid input
         else:
-            print('Not a valid range, please use a range of 1-100.')
-    except ValueError:
-        print('That\'s not a valid number.')
+            break  # Exit the loop if the users value was valid
 
 
 def volume_mute():
-    print('\nWould you like to mute or unmute?')
-    mute_val = input('> ')
+    while True:
+        try:  # Ask the user if they want to un/mute
+            print('\nWould you like to mute or unmute?')
+            mute_val = input('> ')
 
-    if mute_val == 'mute':
-        media.mute(True)
-    elif mute_val == 'unmute':
-        media.mute(False)
-    else:
-        print('That is not a valid value. Please type "mute" or "unmute".')
+            if mute_val.lower() == 'mute':
+                media.mute(True)  # Mute the TV
+            elif mute_val.lower() == 'unmute':
+                media.mute(False)  # Unmute the TV
+
+        except ValueError:  # If an incorrect value is given, warn user and ask again
+            print('That is not a valid value. Please type "mute" or "unmute".')
+            continue  # Ask the user again, after telling them they entered a invalid input
+        else:
+            break  # Exit the loop if the users value was valid
 
 
 def volume_info():
@@ -86,7 +97,7 @@ def kb_input():
 
 
 def unknown_command():
-    print('That\'s not a valid command.')
+    print('That\'s not a valid command. Please only enter a number, that is shown as an option.')
 
 
 menu = {
