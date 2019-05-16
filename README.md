@@ -16,3 +16,36 @@ Once you have completed the above 2 steps you can run the program. After your fi
 ## Credit
 
 This project would not be possible without the use of [supersaiyanmode project](https://github.com/supersaiyanmode/PyWebOSTV). I used his code from the README to connect, and then used some of the control api's.
+
+## Creating a executeable file
+If you would like to run this program on another machine that does not have python, you can create an executeable file. I have made a cmd script that you can run, to install the necessary modules, and then create it. The file will be caleed remote.exe and it will be in a folder dist. To create the executeable file, double click the file called 'Create exe.bat' (This file will only work on Windows machines.)
+
+After the file has finished runnin, you directry will look like this:
+```
+───WebOS-Remote
+   │   Create exe.bat
+   │   remote.py
+   │   remote.spec
+   │
+   ├───build
+   │   └───run
+   │           Analysis-00.toc
+   │           base_library.zip
+   │           EXE-00.toc
+   │           PKG-00.pkg
+   │           PKG-00.toc
+   │           PYZ-00.pyz
+   │           PYZ-00.toc
+   │           run.exe.manifest
+   │           Tree-00.toc
+   │           Tree-01.toc
+   │           warn-run.txt
+   │           xref-run.html
+   │
+   ├───dist
+   │       remote.exe
+   │
+   └───__pycache__
+           remote.cpython-37.pyc
+```
+The newly created executeable will be in the dist folder. You can now use that without needing python to be installed.
