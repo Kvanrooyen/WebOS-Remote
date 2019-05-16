@@ -25,7 +25,7 @@ After the file has finished runnin, you directry will look like this:
 ───WebOS-Remote
    │   Create exe.bat
    │   remote.py
-   │   run.spec
+   │   remote.spec
    │
    ├───build
    │   └───run
