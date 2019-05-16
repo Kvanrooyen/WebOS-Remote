@@ -37,6 +37,7 @@ def volume_set():
                 media.set_volume(volume_level)
             else:
                 print('Not a valid range, please use a range of 1-100.')
+                continue
         except ValueError:
             print('That\'s not a valid number. Try again')
             continue  # Ask the user again, after telling them they entered a invalid input
@@ -54,6 +55,9 @@ def volume_mute():
                 media.mute(True)  # Mute the TV
             elif mute_val.lower() == 'unmute':
                 media.mute(False)  # Unmute the TV
+            else:
+                print('That is not a valid value. Please type "mute" or "unmute".')
+                continue
 
         except ValueError:  # If an incorrect value is given, warn user and ask again
             print('That is not a valid value. Please type "mute" or "unmute".')
@@ -101,7 +105,7 @@ def unknown_command():
 
 
 menu = {
-    "0": sys.exit(),
+    "0": sys.exit,
     "1": volume_set,
     "2": volume_mute,
     "3": system.power_off,
